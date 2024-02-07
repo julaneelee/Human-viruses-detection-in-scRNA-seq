@@ -53,4 +53,6 @@ Rscript create_fetch.R
 ```
 ./only_blastn.sh
 ```
+## 4. Obtain file of matched human viruses with our data `human_viruses_detected_scRNA.txt`
+
 Reference: https://github.com/caleblareau/serratus-reactivation-screen/tree/main/serratus_data_setup
