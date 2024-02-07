@@ -10,9 +10,9 @@
 #blastn each scRNA file with the database 
 #Obtain .txt file that contain human virus matched with our scRNA data 
 
-cd /mnt/data/julanee/sc_rna
+cd /path/to/files
 #Blastn
-export PATH=/mnt/data/julanee/sc_rna/blast/bin:$PATH
+export PATH=/apth/to/directory/blast/bin:$PATH #In order to call command 'blastn without concerning path of blast directory'
 #Merge(cat) all human viruses .fasta file together before using makeblastdb (ex. herpesvirales.fna) 
 human_viruses="all_human_viruses"
 
@@ -27,12 +27,7 @@ cp all_human_viruses.fasta nc_pulls
 #BLASTn
 makeblastdb -in ${human_viruses}.fasta -dbtype nucl -out $human_viruses
 
-for j in *unmapped_reads_default.fasta; do
+for j in *.fasta; do
 	blastn -query $j -db $human_viruses -out  ${j%.fasta}_${human_viruses}.txt -perc_identity 80 -outfmt "6 qseqid stitle pident qseq length mismatch qstart qend sstart send evalue" -num_threads 8
 done
 
-#list of unmapped_reads_default.fasta (4 files)
-#GEX_AAU1_S3_L006_R2_001_unmapped_reads_default.fasta
-#GEX_AAU1_S3_L007_R2_001_unmapped_reads_default.fasta
-#GEX_AAU1_S3_L008_R2_001_unmapped_reads_default.fasta
-#GEX_AAU2_S1_L006_R2_001_unmapped_reads_default.fasta
