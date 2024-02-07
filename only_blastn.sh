@@ -12,7 +12,7 @@
 
 cd /path/to/files
 #Blastn
-export PATH=/apth/to/directory/blast/bin:$PATH #In order to call command 'blastn without concerning path of blast directory'
+export PATH=/path/to/directory/blast/bin:$PATH #In order to call command 'blastn without concerning path of blast directory'
 #Merge(cat) all human viruses .fasta file together before using makeblastdb (ex. herpesvirales.fna) 
 human_viruses="all_human_viruses"
 
