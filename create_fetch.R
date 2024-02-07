@@ -1,3 +1,4 @@
+#Trying to generate efetch command to download all known humna viruses (obtained the list of accession number from ViralZone)
 library(data.table)
 library(dplyr)
 library(stringr)
