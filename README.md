@@ -1,4 +1,4 @@
-# Uveitis-scRNA-seq
+# Human viral detection in scRNA-seq data 
 
 Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
 
