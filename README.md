@@ -12,6 +12,7 @@ Main focus between Blastn and Bowtie2
 graph TD;
     A[scRNA-seq]-->|Filter read quality by fastp| B[trimmed.fastq.gz];
     B-->|Quality check by fastqc| C[trimmed.fastq.gz];
+    C-->J[.fastq];
     C-->|Map with human reference genome using Bowtie2| D[.sam];
     D-->|Convert to binary file| E[.bam];
     E-->|Sort .bam| F[sorted.bam];
@@ -25,6 +26,8 @@ graph TD;
   
     
 ```
+
+
 
 ## Dependencies
 - Docker
