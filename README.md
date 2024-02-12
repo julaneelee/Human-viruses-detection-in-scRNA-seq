@@ -13,8 +13,8 @@ graph TD;
     A[scRNA-seq]-->|Filter read quality by fast[| B[trimmed.fast.gz];
     B-->|Quality check by fastqc| C[Pass];
     B--> D[No];
-    C--> |Map with human reference genome using Bowtie2| E[.sam];
-    D-->|Filter read quality by fast[| B[trimmed.fast.gz];
+    D-->|Quality check by fastqc| C[Pass];
+    C-->|Map with human reference genome using Bowtie2| E[.sam];
     E-->|Convert to binary file| F[.bam];
     F-->|Generate BAM index| G[BAM indexes];
 ```
