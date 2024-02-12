@@ -9,16 +9,16 @@ There's a different purpose of using these tools, Blastn and Bowtie2
 ## Workflow of our study
 
 ```mermaid
-graph TD;
-    scRNA-seq (.fastq.gz) -->|Filter read quality by fastp| Filter_read_quality;
-    Filter_read_quality -->|Map with hg38 to remove human reference background using samtools| Remove_human_background;
-    Remove_human_background -->|Obtain file of unmapped reads (.BAM)| Unmapped_reads_BAM;
-    Unmapped_reads_BAM -->|Convert .BAM to .fastq| Convert_BAM_to_fastq;
-    Convert_BAM_to_fastq -->|Obtain .fastq file| Unmapped_fastq_file;
-    Unmapped_fastq_file -->|Convert to .fasta| Convert_fastq_to_fasta;
-    Convert_fastq_to_fasta -->|Obtain .fasta file| Unmapped_fasta_file;
-    Unmapped_fasta_file -->|Bowtie2| Bowtie2_output;
-    Unmapped_fasta_file -->|Blastn| Blastn_output;
+flowchart TD
+    scRNA-seq (.fastq.gz) --> |Filter read quality by fastp| Filter_read_quality
+    Filter_read_quality -->|Map with hg38 to remove human reference background using samtools| Remove_human_background
+    Remove_human_background -->|Obtain file of unmapped reads (.BAM)| Unmapped_reads_BAM
+    Unmapped_reads_BAM -->|Convert .BAM to .fastq| Convert_BAM_to_fastq
+    Convert_BAM_to_fastq -->|Obtain .fastq file| Unmapped_fastq_file
+    Unmapped_fastq_file -->|Convert to .fasta| Convert_fastq_to_fasta
+    Convert_fastq_to_fasta -->|Obtain .fasta file| Unmapped_fasta_file
+    Unmapped_fasta_file -->|Bowtie2| Bowtie2_output
+    Unmapped_fasta_file -->|Blastn| Blastn_output
 ```
 
 
