@@ -38,6 +38,42 @@ docker pull quay.io/biocontainers/samtools:1.19.2--h50ea8bc_0
 docker pull quay.io/biocontainers/seqtk:1.4--he4a0461_1
 ```
 
+## [[For Bowtie2]] 0. Downloading reference genome and prepared index files for mapping scRNA with Bowtie2
+Before mapping our scRNA seq data with reference sequences, we need to prepare index files of reference genomes.
+In this study, we need to prepare index files of `1) Human reference genome` to remove human genome background from our scRNA seq data and `2) Viral reference genome` we interested, in order to identify whether interested viral sequences are in our scRNA-seq data or not
+
+### Downloading human reference genome from NCBI
+```
+curl https://api.ncbi.nlm.nih.gov/datasets/v2alpha/genome/accession/GCF_000001405.40/download?include_annotation_type=GENOME_FASTA,GENOME_GFF --output hg38.zip
+unzip hg38.zip
+cd /ncbi_dataset/data/GCF_000001405.40 
+mv GCF_000001405.40_GRCh38.p14_genomic.fna hg38.fna
+```
+#or download by using `efetch ` command of Entrez ID tool *We need to know accession number of the reference genome*
+```
+efetch -db nuccore -id NC_000001.11 -format fasta > hg38.fasta
+```
+
+### Downloading viral reference genome from NCBI using `efetch ` command of Entrez ID tool *We need to know accession number of the reference genome*
+```
+#Cytomegalovirus complete genome (Human betaherpesvirus 5)
+efetch -db nuccore -id NC_006273.2 -format fasta > cmv.fasta
+# Epstein-barr virus complete genome (Human gammaherpesvirus 4)
+efetch -db nuccore -id NC_007605.1 -format fasta > ebv.fasta
+#Vericell-zoster virus complete genome (Human alphaherpesvirus 3)
+efetch -db nuccore -id NC_001348.1 -format fasta > vzv.fasta
+```
+
+### After we downloaded reference genomes (contains in same directory), we will generate index files in order to map with our scRNA-seq with Bowtie2 `bowtie2-build` command
+```
+#Generating index file of Human reference genome 
+docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f hg38.fasta hg38
+#Generating index file of interested viral reference genome (e.g. we interested in Cytomegalovirus, Epstein-barr virus, Vericello-zoster virus)
+docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f cmv.fasta cmv       # → Cytomegalovirus(CMV)
+docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f ebv.fasta ebv       # → Epstein-barr virus (EBV)
+docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f vzv.fasta vzv       # → Vericello-zoster virus (VZV)
+```
+
 
 ## 1. Download all known human viruses data from `ViralZone` 
 ```
