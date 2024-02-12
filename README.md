@@ -1,9 +1,10 @@
 # Human viral detection in scRNA-seq data 
 ## Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
+There's a different purpose of using these tools, Blastn and Bowtie2 
 
-| Blastn | Bowtie2 |
-| ------------- | ------------- |
-| Identify human known viruses in database | Identify specific viruses we interested |
+|             |    Blastn     |     Bowtie2   |
+|-------------| ------------- | ------------- |
+| Purpose     | Searching our scRNA-seq reads in known human viruses database to find viral nucleotide sequence similarity | Mapping our scRNA-seq reads to specific viral reference genomes |
 
 
 ## Dependencies
