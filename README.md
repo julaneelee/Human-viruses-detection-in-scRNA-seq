@@ -8,6 +8,7 @@ There's a different purpose of using these tools, Blastn and Bowtie2
 
 ## Workflow of our study
 
+```
 graph TD;
     scRNA-seq (.fastq.gz) -->|Filter read quality by fastp| Filter_read_quality;
     Filter_read_quality -->|Map with hg38 to remove human reference background using samtools| Remove_human_background;
@@ -18,7 +19,7 @@ graph TD;
     Convert_fastq_to_fasta -->|Obtain .fasta file| Unmapped_fasta_file;
     Unmapped_fasta_file -->|Bowtie2| Bowtie2_output;
     Unmapped_fasta_file -->|Blastn| Blastn_output;
-
+```
 
 
 
