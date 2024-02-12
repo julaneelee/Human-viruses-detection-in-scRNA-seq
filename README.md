@@ -122,6 +122,14 @@ Rscript create_fetch.R
 ```
 ./only_blastn.sh
 ```
+to run Blastn separately
+
+or 
+```
+./run_bowtie2_blastn.sh  
+```
+In case, want to run both bowtie2 and blastn together in single run 
+
 ## 4. Obtain file of matched human viruses `exp. human_viruses_detected_scRNA.txt`
 
 Reference: https://github.com/caleblareau/serratus-reactivation-screen/tree/main/serratus_data_setup
