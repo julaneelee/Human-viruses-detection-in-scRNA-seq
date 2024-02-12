@@ -60,8 +60,12 @@ do
 	done
 	
 	#Blastn
-	export PATH=/path/to/blast/bin:$PATH
-	makeblastdb -in herpesvirales.fna -dbtype nucl -out herpesvirales
-	blastn -query ${j%.fastq}.fasta -db herpesvirales -out  ${j%.fastq}_herpesvirales.txt -perc_identity 80 -outfmt "6 qseqid stitle pident qseq length mismatch qstart qend sstart send evalue"
-	blastn -query ${j%.fastq}.fasta -db 3ref1ct -out  ${j%.fastq}_3ref1ct.txt -perc_identity 80 -outfmt "6 qseqid stitle pident qseq length mismatch qstart qend sstart send evalue" 
+	export PATH=/path/to/directory/blast/bin:$PATH 
+ 	#Merge(cat) all human viruses .fasta file together before using makeblastdb (ex. herpesvirales.fna) 
+ 	human_viruses="all_human_viruses"
+	makeblastdb -in ${human_viruses}.fasta -dbtype nucl -out $human_viruses
+	blastn -query $j -db $human_viruses -out  ${j%.fasta}_${human_viruses}.txt -perc_identity 80 -outfmt "6 qseqid stitle pident qseq length mismatch qstart qend sstart send evalue" -num_threads 8
 done
+
+
+
