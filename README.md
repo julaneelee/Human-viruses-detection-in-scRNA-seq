@@ -10,10 +10,10 @@ There's a different purpose of using these tools, Blastn and Bowtie2
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    A[scRNA-seq]-->|Filter read quality| B[trimmed.fast.gz];
+    B-->|Map with human reference genome| C[.sam];
+    C-->|Convert to binary file| D[.bam];
+    D-->|Generate BAM index| E[BAM indexes];
 ```
 
 ## Dependencies
