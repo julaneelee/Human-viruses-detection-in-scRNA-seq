@@ -1,6 +1,6 @@
 # Human viral detection in scRNA-seq data 
 ## Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
-There's a different purpose of using these tools, Blastn and Bowtie2 
+Main focus between Blastn and Bowtie2 
 
 |             |    Blastn     |     Bowtie2   |
 |-------------| ------------- | ------------- |
