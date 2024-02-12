@@ -10,13 +10,19 @@ There's a different purpose of using these tools, Blastn and Bowtie2
 
 ```mermaid
 graph TD;
-    A[scRNA-seq]-->|Filter read quality by fast[| B[trimmed.fast.gz];
-    B-->|Quality check by fastqc| C[Pass];
-    B--> D[No];
-    D-->|Quality check by fastqc| C[Pass];
-    C-->|Map with human reference genome using Bowtie2| E[.sam];
-    E-->|Convert to binary file| F[.bam];
-    F-->|Generate BAM index| G[BAM indexes];
+    A[scRNA-seq]-->|Filter read quality by fast[| B[trimmed.fastq.gz];
+    B-->|Quality check by fastqc| C[trimmed.fastq.gz];
+    C-->|Map with human reference genome using Bowtie2| D[.sam];
+    D-->|Convert to binary file| E[.bam];
+    E-->|Sort .bam| F[sorted.bam];
+    F-->|Generate BAM index| G[.bam.bai];
+    F-->|Remove human reference background by samtools| H[removeBG_sorted.bam] ;
+    H-->|Generate BAM index| I[removeBG_sorted.bam.bai];
+    H-->|Generate .fastq file to further mapping using Bowtie2| J[.fastq];
+    J-->|Generate .fasta file to further searching nucleotide sequence similarity using Blastn| K[.fasta];
+    J-->L[Bowtie2];
+    K-->M[Blastn];
+    
 ```
 
 ## Dependencies
