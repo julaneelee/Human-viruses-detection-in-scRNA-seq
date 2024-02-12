@@ -18,7 +18,6 @@ graph TD;
     E-->|Sort .bam| F[sorted.bam];
     F-->|Generate BAM index| G[.bam.bai];
     F-->|Remove human reference background by samtools| H[removeBG_sorted.bam] ;
-    H-->
     H-->|Generate BAM index| I[removeBG_sorted.bam.bai];
     H-->|Generate .fastq file for further mapping using Bowtie2| J[.fastq];
     J-->|Generate .fasta file for further searching nucleotide sequence similarity using Blastn| K[.fasta];
