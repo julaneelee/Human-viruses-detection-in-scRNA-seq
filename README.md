@@ -12,8 +12,8 @@ There's a different purpose of using these tools, Blastn and Bowtie2
 graph TD;
     A[scRNA-seq]-->|Filter read quality by fast[| B[trimmed.fast.gz];
     B-->|Quality check by fastqc| C[Pass];
+    B--> D[No];
     C--> |Map with human reference genome using Bowtie2| E[.sam];
-    B-->|Quality check by fastqc| D[No];
     D-->|Filter read quality by fast[| B[trimmed.fast.gz];
     E-->|Convert to binary file| F[.bam];
     F-->|Generate BAM index| G[BAM indexes];
