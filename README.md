@@ -1,8 +1,12 @@
 # Human viral detection in scRNA-seq data 
+## Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
 
-Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
+| Blastn | Bowtie2 |
+| ------------- | ------------- |
+| Identify human known viruses in database | Identify specific viruses we interested |
 
-Dependencies
+
+## Dependencies
 - Docker
 - Anaconda
 - Entrez Direct
@@ -38,7 +42,8 @@ docker pull quay.io/biocontainers/samtools:1.19.2--h50ea8bc_0
 docker pull quay.io/biocontainers/seqtk:1.4--he4a0461_1
 ```
 
-## [[For Bowtie2]] 0. Downloading reference genome and preparing index files for mapping scRNA with Bowtie2
+## [[For Bowtie2]] 
+### Downloading reference genome and preparing index files for mapping scRNA with Bowtie2
 Before mapping our scRNA seq data with reference sequences, we need to prepare index files of reference genomes.
 In this study, we need to prepare index files of `1) Human reference genome` to remove human genome background from our scRNA seq data and `2) Viral reference genome` we interested, in order to identify whether interested viral sequences are in our scRNA-seq data or not
 
