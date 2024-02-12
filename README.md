@@ -8,6 +8,8 @@ Main focus between Blastn and Bowtie2
 
 ## Workflow of our study
 
+Due to scRNA-seq reads are short and easy to loss the information if we filtered out a lot of reads, I decided to do two different ways. 1.) I mapped scRNA-seq data with human reference genome to remove human background (only remains expected RNA sequence reads of viruses) in case the scRNA-seq contaminated human reference sequence due to sampling. 2.) After read quality filtering, I directly search nucleotide sequence similarity using Blastn in order to gain more information of viral matching in the database.
+
 ```mermaid
 graph TD;
     A[scRNA-seq]-->|Filter read quality by fastp| B[trimmed.fastq.gz];
