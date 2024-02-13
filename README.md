@@ -140,11 +140,11 @@ Last step, we will run bash script which `all_human_viruses.fasta` is the input 
 Here is the bash script for running both bowtie2 and blastn together in single run 
 
 ```
-./run_bowtie2_blastn.sh  
+nohup ./run_bowtie2_blastn.sh > run_bowtie2_blastn.out
 ```
 In case, we need to run only BLASTn separeately
 ```
-./only_blastn.sh
+nohup ./only_blastn.sh > only_blastn.out
 ```
 
 ## 4.) Obtain file of matched human viruses `exp. human_viruses_detected_scRNA.txt`
