@@ -2,7 +2,7 @@
 ## Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
 Main focus between Blastn and Bowtie2 
 
-|             |    Blastn     |     Bowtie2   |
+|             |    BLASTn     |     Bowtie2   |
 |-------------| ------------- | ------------- |
 | Purpose     | Searching our scRNA-seq reads in known human viruses database to find viral nucleotide sequence similarity | Mapping our scRNA-seq reads to specific viral reference genomes |
 
