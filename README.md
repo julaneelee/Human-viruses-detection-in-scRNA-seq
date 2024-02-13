@@ -120,7 +120,7 @@ Rscript create_fetch.R
 ```
 ### - Run bash script to fetch all known human viruses .fasta files 
 ```
-./run_efetch.sh
+nohup ./run_efetch.sh > run_efecth.out
 ```
 After running `run_efetch.sh`, we will obtain all known human virus genomes in `.fasta` file in our directory. Due to we tried to fetch all possible existed version of complete genome by accession number, so we may gain non-existed version of complete genome with no information inside the file. Because of this, we need to remove all files that have no sequence information.
 ```
