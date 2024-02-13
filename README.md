@@ -99,12 +99,12 @@ efetch -db nuccore -id NC_001348.1 -format fasta > vzv.fasta
 ### - After we retreiveed specific reference genomes (contains in same directory), we will generate index files in order to map with our scRNA-seq with Bowtie2 `bowtie2-build` command
 ```
 #Generating index file of Human reference genome
-docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f hg38.fasta hg38
+docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f hg38.fasta hg38
 
 #Generating index file of interested viral reference genome (e.g. we interested in Cytomegalovirus, Epstein-barr virus, Vericello-zoster virus)
-docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f cmv.fasta cmv       # → Cytomegalovirus(CMV)
-docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f ebv.fasta ebv       # → Epstein-barr virus (EBV)
-docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f vzv.fasta vzv       # → Vericello-zoster virus (VZV)
+docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f cmv.fasta cmv       # → Cytomegalovirus(CMV)
+docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f ebv.fasta ebv       # → Epstein-barr virus (EBV)
+docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f vzv.fasta vzv       # → Vericello-zoster virus (VZV)
 ```
 
 
