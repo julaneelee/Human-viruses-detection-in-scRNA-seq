@@ -67,23 +67,23 @@ docker pull quay.io/biocontainers/samtools:1.19.2--h50ea8bc_0
 docker pull quay.io/biocontainers/seqtk:1.4--he4a0461_1
 ```
 
-## [[For Bowtie2]] Retrieving reference genome and generating index files 
+## 0.) [[For Bowtie2]] Retrieving reference genome and generating index files 
 Before mapping our scRNA-seq data with reference sequences, we need to prepare index files of reference genomes.
 We need to prepare index files of `1) Human reference genome`  remove human genome background from our scRNA seq data and `2) Viral reference genome` we interested, in order to identify whether interested viral sequences are in our scRNA-seq data or not
 
-### Downloading human reference genome from NCBI
+### - Retreive human reference genome from NCBI
 ```
 curl https://api.ncbi.nlm.nih.gov/datasets/v2alpha/genome/accession/GCF_000001405.40/download?include_annotation_type=GENOME_FASTA,GENOME_GFF --output hg38.zip
 unzip hg38.zip
 cd /ncbi_dataset/data/GCF_000001405.40 
 mv GCF_000001405.40_GRCh38.p14_genomic.fna hg38.fna
 ```
-### or download human reference genome by using `efetch ` command of Entrez ID tool *We need to know accession number of the reference genome*
+### - or Retreive human reference genome by using `efetch ` command of Entrez ID tool *We need to know accession number of the reference genome*
 ```
 efetch -db nuccore -id NC_000001.11 -format fasta > hg38.fasta
 ```
 
-### Downloading viral reference genome from NCBI using `efetch ` command of Entrez ID tool , *Note:We need to know accession number of the reference genome*
+### - Retreive specific viral reference genome from NCBI using `efetch ` command of Entrez ID tool , *Note:We need to know accession number of the reference genome*
 e.g.
 ```
 #Cytomegalovirus complete genome (Human betaherpesvirus 5)
@@ -96,7 +96,7 @@ efetch -db nuccore -id NC_007605.1 -format fasta > ebv.fasta
 efetch -db nuccore -id NC_001348.1 -format fasta > vzv.fasta
 ```
 
-### After we downloaded reference genomes (contains in same directory), we will generate index files in order to map with our scRNA-seq with Bowtie2 `bowtie2-build` command
+### - After we retreiveed specific reference genomes (contains in same directory), we will generate index files in order to map with our scRNA-seq with Bowtie2 `bowtie2-build` command
 ```
 #Generating index file of Human reference genome
 docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f hg38.fasta hg38
@@ -108,28 +108,45 @@ docker run --rm -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py3
 ```
 
 
-## 1. Download all known human viruses data from `ViralZone` 
+## 0.) [[For BLASTn]] Download all known human viruses data from `ViralZone` 
 ```
 wget -O Table_human_viruses.txt https://viralzone.expasy.org/resources/Table_human_viruses.txt?
 ```
-## 2. Generate list of `efetch` commands into bash script
+### - Generate list of `efetch` commands into bash script
 ```
 conda create -n r_env r-essentials r-base
 conda activate r_env
 Rscript create_fetch.R
 ```
-## 3. Run bash script to fetch all known human viruses .fasta files 
+### - Run bash script to fetch all known human viruses .fasta files 
 ```
-./only_blastn.sh
+./run_efetch.sh
 ```
-to run Blastn separately
+After running `run_efetch.sh`, we will obtain all known human virus genomes in `.fasta` file in our directory. Due to we tried to fetch all possible existed version of complete genome by accession number, so we may gain non-existed version of complete genome with no information inside the file. Because of this, we need to remove all files that have no sequence information.
+```
+#Find all file in directory that has no second line then remove !
+find . -type f -exec awk -v x=2 'NR==x{exit 1}' {} \; -exec rm -f {} \;
+```
+So now, inside our directory will only remain `.fasta` file with sequence information.
+Next, we aimed to generate single `.fasta` file which contains all known human virus genome sequences `all_human_viruses.fasta`
+```
+cat NC*.fasta > all_human_viruses.fasta
+mkdir nc_pulls
+mv NC*.fasta nc_pulls #move all .fasta files to new directory
+cp all_human_viruses.fasta nc_pulls
+```
+Last step, we will run bash script which `all_human_viruses.fasta` is the input data for running BLASTn while Bowtie2 will use array of viral reference genome as input (we need to change index name inside the script)
 
-or 
+Here is the bash script for running both bowtie2 and blastn together in single run 
+
 ```
 ./run_bowtie2_blastn.sh  
 ```
-In case, want to run both bowtie2 and blastn together in single run 
+In case, we need to run only BLASTn separeately
+```
+./only_blastn.sh
+```
 
-## 4. Obtain file of matched human viruses `exp. human_viruses_detected_scRNA.txt`
+## 4.) Obtain file of matched human viruses `exp. human_viruses_detected_scRNA.txt`
 
 Reference: https://github.com/caleblareau/serratus-reactivation-screen/tree/main/serratus_data_setup
