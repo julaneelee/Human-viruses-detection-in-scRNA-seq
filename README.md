@@ -14,9 +14,11 @@ Due to scRNA-seq reads are short and easy to loss the information if we filtered
 graph TD;
     A[scRNA-seq]-->|Filter read quality by fastp| B[trimmed.fastq.gz];
     B-->|Quality check by fastqc| C[trimmed.fastq.gz];
-    C--> |Not remove human background| L[Bowtie2];
-    C--> |Not remove human background| M[Blastn];
-    C-->|Map with human reference genome using Bowtie2| D[.sam];
+    C--> N[Not remove human background];
+    C--> O[Remove human background];
+    N--> L[Bowtie2];
+    N--> M[Blastn];
+    O-->|Map with human reference genome using Bowtie2| D[.sam];
     D-->|Convert to binary file| E[.bam];
     E-->|Sort .bam| F[sorted.bam];
     F-->|Generate BAM index| G[.bam.bai];
