@@ -155,7 +155,8 @@ nohup ./only_blastn.sh > only_blastn.out
 
 
 ## Output
-
+### Pre-processing step 
+First input: Raw .fastq.gz file
 - Raw .fastq.gz file
 	- trimmed.fastq.gz
 		- .sam
@@ -166,7 +167,8 @@ nohup ./only_blastn.sh > only_blastn.out
 							- unmapped_reads.bam.bai
 								- unmapped_reads.fastq
 									- unmapped_reads.fasta
-         
-![image](https://github.com/julaneelee/Human-viruses-detection-in-scRNA-seq/assets/158822222/6cfa8f85-a8bc-4266-b760-e0e3c8068662)
+**Output for the next process**
+Input using with **_BLASTn_** for nucleotide similarity seacrhing: **unmapped_reads.fasta**
+Input using with **_Bowtie2_** for mapping with reference genome: **unmapped_reads.fastq**
 
 Reference: https://github.com/caleblareau/serratus-reactivation-screen/tree/main/serratus_data_setup
