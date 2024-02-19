@@ -171,6 +171,9 @@ First input: Raw .fastq.gz file
 
 **Output for the next process**
 Input using with **_BLASTn_** for nucleotide similarity seacrhing: **unmapped_reads.fasta**
+
 Input using with **_Bowtie2_** for mapping with reference genome: **unmapped_reads.fastq**
+
+
 
 Reference: https://github.com/caleblareau/serratus-reactivation-screen/tree/main/serratus_data_setup
