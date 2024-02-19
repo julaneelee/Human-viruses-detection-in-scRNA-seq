@@ -70,7 +70,7 @@ docker pull quay.io/biocontainers/samtools:1.19.2--h50ea8bc_0
 docker pull quay.io/biocontainers/seqtk:1.4--he4a0461_1
 ```
 
-## 0.) [[For Bowtie2]] Retrieving reference genome and generating index files 
+## Pre-processing step: [[For Bowtie2]] Retrieving reference genome and generating index files 
 Before mapping our scRNA-seq data with reference sequences, we need to prepare index files of reference genomes.
 We need to prepare index files of `1) Human reference genome`  remove human genome background from our scRNA seq data and `2) Viral reference genome` we interested, in order to identify whether interested viral sequences are in our scRNA-seq data or not
 
@@ -111,7 +111,7 @@ docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocont
 ```
 
 
-## 0.) [[For BLASTn]] Download all known human viruses data from `ViralZone` 
+## Pre-processing step: Download all known human viruses data from `ViralZone` 
 ```
 wget -O Table_human_viruses.txt https://viralzone.expasy.org/resources/Table_human_viruses.txt?
 ```
