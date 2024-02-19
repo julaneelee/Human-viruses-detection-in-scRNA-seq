@@ -153,4 +153,20 @@ nohup ./only_blastn.sh > only_blastn.out
 
 ## 4.) Obtain file of matched human viruses `exp. human_viruses_detected_scRNA.txt`
 
+
+## Output
+
+- Raw .fastq.gz file
+	- trimmed.fastq.gz
+		- .sam
+			- .bam
+				- Sorted.bam
+					 - removeBG_sorted.bam
+						- unmapped_reads.bam
+							- unmapped_reads.bam.bai
+								- unmapped_reads.fastq
+									- unmapped_reads.fasta
+         
+![image](https://github.com/julaneelee/Human-viruses-detection-in-scRNA-seq/assets/158822222/6cfa8f85-a8bc-4266-b760-e0e3c8068662)
+
 Reference: https://github.com/caleblareau/serratus-reactivation-screen/tree/main/serratus_data_setup
