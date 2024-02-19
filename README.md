@@ -1,6 +1,6 @@
 # Human viral detection in scRNA-seq data 
-## Human known viruses identification from scRNA-seq data using Bowtie2 and blastn
-Main focus between Blastn and Bowtie2 
+## Human known viruses identification from scRNA-seq data using Bowtie2 and BLASTn
+Main focus between BLASTn and Bowtie2 
 
 |             |    BLASTn     |     Bowtie2   |
 |-------------| ------------- | ------------- |
@@ -8,7 +8,9 @@ Main focus between Blastn and Bowtie2
 
 ## Workflow of our study
 
-Due to scRNA-seq reads are short and easy to loss the information if we filtered out a lot of reads, I decided to do two different ways. 1.) I mapped scRNA-seq data with human reference genome to remove human background (only remains expected sequence reads of viruses) in case the scRNA-seq contaminated human reference sequence due to sampling. 2.) After read quality filtering, I directly search the sequence read using Blastn or map with reference sequence using Bowtie2, in order to gain more information of viral detection 
+Due to scRNA-seq reads are short and easy to loss the information if we filtered out a lot of reads, I decided to do two different ways. 
+	- 1.) I mapped scRNA-seq data with human reference genome to remove human background (only remains expected viral sequence reads) in case the scRNA-seq contaminated human reference sequence due to sampling. 
+ 	- 2.) After processed read quality filtering, I directly search the sequence reads using **BLASTn** or map with viral reference sequences using **Bowtie2** for viral sequence detection
 
 ```mermaid
 graph TD;
@@ -71,8 +73,10 @@ docker pull quay.io/biocontainers/seqtk:1.4--he4a0461_1
 ```
 
 ## Pre-processing step: [[For Bowtie2]] Retrieving reference genome and generating index files 
-Before mapping our scRNA-seq data with reference sequences, we need to prepare index files of reference genomes.
-We need to prepare index files of `1) Human reference genome`  remove human genome background from our scRNA seq data and `2) Viral reference genome` we interested, in order to identify whether interested viral sequences are in our scRNA-seq data or not
+Before mapping our scRNA-seq data with reference sequences, we need to prepare index files of reference genomes. (We will contain these index names into array name `viral_reference_genome_array` in the script `run_bowtie2_blastn.sh`)
+We need to prepare index files of 
+	- `1) Human reference genome` for the process of removing human genome background from our scRNA seq data
+	- `2) Viral reference genome` we interested, in order to identify whether interested viral sequences are in our scRNA-seq data or not
 
 ### - Retreive human reference genome from NCBI
 ```
@@ -99,7 +103,7 @@ efetch -db nuccore -id NC_007605.1 -format fasta > ebv.fasta
 efetch -db nuccore -id NC_001348.1 -format fasta > vzv.fasta
 ```
 
-### - After we retreiveed specific reference genomes (contains in same directory), we will generate index files in order to map with our scRNA-seq with Bowtie2 `bowtie2-build` command
+### - After we retreived specific reference genomes (contains in same directory), we will generate index files in order to map with our scRNA-seq with Bowtie2 `bowtie2-build` command
 ```
 #Generating index file of Human reference genome
 docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f hg38.fasta hg38
@@ -110,12 +114,13 @@ docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocont
 docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f vzv.fasta vzv       # → Vericello-zoster virus (VZV)
 ```
 
-
+We aimed to identify all known human viruses in the database, so we try to get the list of viral accession number from NCBI from the all known human viruses report (In this study, we got the report in table from ViralZone website)
 ## Pre-processing step: Download all known human viruses data from `ViralZone` 
 ```
-wget -O Table_human_viruses.txt https://viralzone.expasy.org/resources/Table_human_viruses.txt?
+wget https://viralzone.expasy.org/resources/Table_human_viruses.txt?
 ```
-### - Generate list of `efetch` commands into bash script
+
+### - Generate list of `efetch` commands (to retreive .fasta from NCBI) into bash script
 ```
 conda create -n r_env r-essentials r-base
 conda activate r_env
@@ -142,13 +147,13 @@ cp all_human_viruses.fasta nc_pulls
 ```
 Last step, we will run bash script which `all_human_viruses.fasta` is the input data for running BLASTn while Bowtie2 will use array of viral reference genome as input (we need to change index name inside the script)
 
-Here is the bash script for running both bowtie2 and blastn together in single run 
-
+Here is the bash script for running both bowtie2 and blastn together in single run  **Note: Inside the script, there are some steps with the comment `#`, some may already process outside the script, the file name for each loop, and the path working directory you need to modify by yourself. Depends on your data**
 ```
 chmod 777 run_bowtie2_blastn.sh
 nohup ./run_bowtie2_blastn.sh > run_bowtie2_blastn.out
 ```
 In case, we need to run only BLASTn separeately
+
 ```
 chmod 777 only_blastn.sh
 nohup ./only_blastn.sh > only_blastn.out
@@ -168,8 +173,8 @@ First input: Raw .fastq.gz file
 					 - removeBG_sorted.bam
 						- unmapped_reads.bam
 							- unmapped_reads.bam.bai
-								- unmapped_reads.fastq
-									- unmapped_reads.fasta
+								- _**unmapped_reads.fastq**_
+									- _** unmapped_reads.fasta**_ 
   
 
 **Output for the next process**
