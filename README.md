@@ -30,7 +30,7 @@ graph TD;
     H-->|Generate .fastq file for further mapping using Bowtie2| J[removeBG_sorted.fastq];
     J--> L[Bowtie2];
     J--> |Converted .fastq to .fasta for using as input for BLASTn| P[removeBG_sorted.fasta];
-    p -->M[BLASTn];
+    P-->M[BLASTn];
 ```
 
 
