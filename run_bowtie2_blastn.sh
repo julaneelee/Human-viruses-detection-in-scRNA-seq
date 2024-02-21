@@ -45,7 +45,7 @@ do
 	do 
 		echo $m
 		#0. Generate index for reference (already generated) 
-		#docker run --rm --user 1012:1012 -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f ${m}.fasta $m &&
+		#docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2-build -f ${m}.fasta $m &&
 		#1. Aligning with viral reference 
 		docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/bowtie2:2.5.2--py39h6fed5c7_0 bowtie2 -x $m -U $j -S ${j%.fastq}_${m}.sam &&
 		#2. Converting .sam to .bam
