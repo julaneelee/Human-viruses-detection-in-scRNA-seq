@@ -18,7 +18,7 @@ graph TD;
     B-->|Quality check by fastqc| C[trimmed.fastq.gz];
     C--> N[Not remove human background];
     C--> O[Remove human background];
-    N--> |Converted .fastq to .fasta| K[.fasta];
+    N--> |Converted .fastq to .fasta| K[trimmed.fasta];
     K--> M[BLASTn];
     N--> L[Bowtie2];
     O-->|Map with human reference genome using Bowtie2| D[.sam];
@@ -27,10 +27,8 @@ graph TD;
     F-->|Generate BAM index| G[.bam.bai];
     F-->|Remove human reference background by samtools| H[removeBG_sorted.bam] ;
     H-->|Generate BAM index| I[removeBG_sorted.bam.bai];
-    H-->|Generate .fastq file for further mapping using Bowtie2| J[.fastq];
-    J-->L[Bowtie2];
-    K-->M[Blastn];
-  
+    H-->|Generate .fastq file for further mapping using Bowtie2| J[removeBG_sorted.fastq];
+    J--> |Converted .fastq to .fasta for using as input for BLASTn| P[removeBG_sorted.fasta];
     
 ```
 
