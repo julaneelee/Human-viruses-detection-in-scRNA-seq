@@ -56,7 +56,9 @@ do
 		docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/samtools:1.19--h50ea8bc_0 samtools index ${j%.fastq}_sorted_${m}.bam &&
 		#5. Read depth checking
 		docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/samtools:1.19--h50ea8bc_0 samtools depth ${j%.fastq}_sorted_${m}.bam > ${j%.fastq}_depth_${m}.txt &&
-		echo 'Mapping with Bowtie2 finished'
+		#6 Get read mapping report  
+	        docker run --rm --user $(id -u):$(id -g) -v `pwd`:`pwd` -w `pwd` quay.io/biocontainers/samtools:1.19--h50ea8bc_0 samtools flagstat ${j%.fastq}_sorted_${m}.bam > ${j%.fastq}_report_${m}.txt &&
+  		echo 'Mapping with Bowtie2 finished'
 	done
 	
 	#Blastn
