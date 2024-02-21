@@ -173,7 +173,7 @@ First input: Raw .fastq.gz file
 						- unmapped_reads.bam
 							- unmapped_reads.bam.bai
 								- _**unmapped_reads.fastq**_
-									- _** unmapped_reads.fasta**_ 
+									-  **_unmapped_reads.fasta_**
   
 
 **Output for the next process**
